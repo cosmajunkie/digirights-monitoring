@@ -1,0 +1,1110 @@
+<title>Sākṣhī — Digital Rights Witness Archive</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* ── Tokens ───────────────────────────────────────────────── */
+:root {
+  --ground:       #FAF8FF;
+  --surface:      #FFFFFF;
+  --surface-alt:  #F0ECF8;
+  --text-hi:      #241838;
+  --text-med:     #564870;
+  --text-lo:      #907AA8;
+  --primary:      #6840A8;
+  --primary-h:    #7E54C0;
+  --accent:       #C49030;
+  --accent-pale:  #FDF3D8;
+  --caution:      #A83030;
+  --caution-pale: #FDF0EE;
+  --border:       #E0D8F0;
+  --border-mid:   #B8A8D8;
+  --shadow:       rgba(80,40,140,0.07);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground:       #FAF8FF;
+    --surface:      #FFFFFF;
+    --surface-alt:  #F0ECF8;
+    --text-hi:      #241838;
+    --text-med:     #564870;
+    --text-lo:      #907AA8;
+    --primary:      #6840A8;
+    --primary-h:    #7E54C0;
+    --accent:       #C49030;
+    --accent-pale:  #FDF3D8;
+    --caution:      #A83030;
+    --caution-pale: #FDF0EE;
+    --border:       #E0D8F0;
+    --border-mid:   #B8A8D8;
+    --shadow:       rgba(80,40,140,0.07);
+  }
+}
+:root[data-theme="light"],
+:root[data-theme="dark"] {
+  --ground:#FAF8FF;--surface:#FFFFFF;--surface-alt:#F0ECF8;
+  --text-hi:#241838;--text-med:#564870;--text-lo:#907AA8;
+  --primary:#6840A8;--primary-h:#7E54C0;--accent:#C49030;
+  --accent-pale:#FDF3D8;--caution:#A83030;--caution-pale:#FDF0EE;
+  --border:#E0D8F0;--border-mid:#B8A8D8;--shadow:rgba(80,40,140,0.07);
+}
+
+/* ── Reset ────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.65;
+  background:var(--ground);color:var(--text-hi);
+  min-height:100vh;
+  transition:background .2s,color .2s;
+}
+
+/* ── Type ─────────────────────────────────────────────────── */
+h1,h2,h3{
+  font-family:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  line-height:1.25;text-wrap:balance;color:var(--text-hi);
+}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:400}
+h2{font-size:clamp(1.35rem,3vw,1.8rem);font-weight:400}
+h3{font-size:1.05rem;font-weight:600}
+p{color:var(--text-med)}
+a{color:var(--primary)}
+
+/* ── Layout ───────────────────────────────────────────────── */
+.wrap{width:100%;max-width:960px;margin:0 auto;padding:0 24px}
+.wrap--narrow{max-width:660px}
+
+/* ── Nav ──────────────────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--ground);border-bottom:1px solid var(--border);
+}
+.nav__in{
+  display:flex;align-items:center;gap:8px;
+  height:58px;padding:0 24px;max-width:960px;margin:0 auto;
+}
+.nav__brand{
+  display:flex;flex-direction:column;line-height:1;
+  text-decoration:none;color:var(--text-hi);flex-shrink:0;margin-right:8px;
+}
+.nav__brand-deva{font-size:.6rem;letter-spacing:.08em;color:var(--text-lo)}
+.nav__brand-roman{
+  font-family:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  font-size:1.15rem;font-weight:400;letter-spacing:.03em;
+}
+.nav__links{display:flex;gap:2px;list-style:none;margin-left:auto}
+.nav__links a{
+  display:block;padding:6px 13px;border-radius:20px;text-decoration:none;
+  font-size:.83rem;color:var(--text-med);
+  transition:background .15s,color .15s;
+}
+.nav__links a:hover{background:var(--surface-alt);color:var(--text-hi)}
+.nav__links a.active{background:var(--surface-alt);color:var(--primary);font-weight:500}
+.nav__theme{
+  display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;flex-shrink:0;
+  border:1px solid var(--border);background:var(--surface);
+  border-radius:50%;cursor:pointer;color:var(--text-med);
+  transition:background .15s;
+}
+.nav__theme:hover{background:var(--surface-alt)}
+@media(max-width:600px){
+  .nav__links a{font-size:.78rem;padding:5px 9px}
+}
+
+/* ── Section panels ───────────────────────────────────────── */
+.panel{display:none}
+.panel.active{display:block}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero{padding:72px 0 64px;border-bottom:1px solid var(--border)}
+.hero__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:18px;
+}
+.hero__eyebrow::before{content:'';display:block;width:18px;height:1px;background:var(--accent)}
+.hero h1{margin-bottom:18px;font-weight:300}
+.hero h1 em{font-style:italic;color:var(--primary)}
+.hero__desc{font-size:1rem;line-height:1.8;margin-bottom:28px;max-width:54ch;color:var(--text-med)}
+.hero__cta{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:10px 20px;border-radius:6px;
+  font-size:.875rem;font-weight:500;cursor:pointer;
+  border:none;text-decoration:none;line-height:1;
+  transition:background .15s,box-shadow .15s;
+}
+.btn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.btn--primary{background:var(--primary);color:#fff}
+.btn--primary:hover{background:var(--primary-h)}
+.btn--ghost{background:transparent;border:1px solid var(--border-mid);color:var(--text-med)}
+.btn--ghost:hover{background:var(--surface-alt);color:var(--text-hi)}
+
+/* ── Safety note ──────────────────────────────────────────── */
+.safe-note{
+  display:flex;gap:12px;align-items:flex-start;
+  background:var(--accent-pale);border-left:3px solid var(--accent);
+  padding:13px 16px;border-radius:0 6px 6px 0;
+  font-size:.85rem;color:var(--text-med);line-height:1.55;
+  margin-bottom:28px;
+}
+.safe-note__ico{flex-shrink:0;font-size:1rem;margin-top:1px}
+.safe-note strong{color:var(--text-hi)}
+.safe-note a{color:var(--primary)}
+
+/* ── Form card ────────────────────────────────────────────── */
+.form-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:38px 40px;
+  box-shadow:0 2px 18px var(--shadow);
+}
+@media(max-width:580px){.form-card{padding:24px 18px}}
+
+.prog{
+  display:flex;align-items:center;gap:6px;margin-bottom:34px;
+}
+.prog__dot{
+  width:7px;height:7px;border-radius:50%;background:var(--border);
+  transition:background .2s,transform .2s;
+}
+.prog__dot.active{background:var(--primary);transform:scale(1.4)}
+.prog__dot.done{background:var(--accent)}
+.prog__lbl{margin-left:auto;font-size:.78rem;color:var(--text-lo)}
+
+.step{display:none}
+.step.vis{display:block}
+.step__title{
+  font-family:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  font-size:1.35rem;font-weight:400;margin-bottom:5px;color:var(--text-hi);
+}
+.step__sub{font-size:.875rem;color:var(--text-lo);margin-bottom:26px}
+
+/* Fields */
+.field{margin-bottom:20px}
+.field__lbl{
+  display:block;font-size:.72rem;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text-lo);margin-bottom:5px;
+}
+.field__lbl .opt{font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-lo)}
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="email"],
+select,
+textarea{
+  width:100%;padding:9px 13px;
+  background:var(--ground);border:1px solid var(--border);border-radius:6px;
+  color:var(--text-hi);font-family:inherit;font-size:.93rem;
+  transition:border-color .15s,box-shadow .15s;
+  -webkit-appearance:none;appearance:none;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(104,64,168,.13);
+}
+textarea{resize:vertical;min-height:118px;line-height:1.6}
+select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%238DAA8D'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center;
+  padding-right:34px;cursor:pointer;
+}
+.field__hint{font-size:.77rem;color:var(--text-lo);margin-top:5px}
+.char-count{text-align:right;font-size:.73rem;color:var(--text-lo);margin-top:3px}
+.char-count.near{color:var(--caution)}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:460px){.row-2{grid-template-columns:1fr}}
+
+/* Type cards */
+.type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;margin-bottom:4px}
+.type-card{
+  border:1.5px solid var(--border);border-radius:8px;padding:13px;
+  cursor:pointer;background:var(--ground);text-align:left;
+  display:flex;flex-direction:column;gap:5px;
+  transition:border-color .15s,background .15s;
+}
+.type-card:hover{border-color:var(--border-mid);background:var(--surface-alt)}
+.type-card.sel{border-color:var(--primary);background:var(--accent-pale)}
+.type-card__ico{font-size:1.25rem}
+.type-card__txt{font-size:.82rem;font-weight:500;color:var(--text-hi);line-height:1.3}
+
+/* Option rows (scope / anon) */
+.opt-rows{display:flex;flex-direction:column;gap:9px}
+.opt-row{
+  display:flex;align-items:flex-start;gap:13px;
+  border:1.5px solid var(--border);border-radius:8px;padding:14px 16px;
+  cursor:pointer;background:var(--ground);
+  transition:border-color .15s,background .15s;
+}
+.opt-row:hover{border-color:var(--border-mid);background:var(--surface-alt)}
+.opt-row.sel{border-color:var(--primary);background:var(--accent-pale)}
+.opt-row input[type="radio"]{
+  flex-shrink:0;margin-top:3px;
+  accent-color:var(--primary);width:15px;height:15px;cursor:pointer;
+}
+.opt-row__body{flex:1}
+.opt-row__title{font-weight:600;font-size:.92rem;color:var(--text-hi)}
+.opt-row__desc{font-size:.8rem;color:var(--text-lo);margin-top:2px;line-height:1.45}
+.badge{
+  flex-shrink:0;align-self:center;
+  font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:2px 7px;border-radius:20px;
+}
+.badge--safe{background:var(--accent-pale);color:#8B6820;border:1px solid rgba(201,169,78,.4)}
+.badge--priv{background:var(--surface-alt);color:var(--text-lo);border:1px solid var(--border)}
+
+/* Form nav */
+.form-nav{
+  display:flex;gap:10px;margin-top:28px;padding-top:22px;
+  border-top:1px solid var(--border);
+}
+
+/* Review */
+.review-list{list-style:none}
+.review-item{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.review-item:last-child{border-bottom:none}
+.review-item__k{
+  min-width:120px;flex-shrink:0;
+  font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text-lo);padding-top:2px;
+}
+.review-item__v{color:var(--text-hi);line-height:1.5}
+
+/* Success */
+.success{text-align:center;padding:32px 0}
+.success__ico{font-size:2.8rem;display:block;margin-bottom:14px}
+.success__ref{
+  display:inline-block;font-family:"Courier New",Courier,monospace;
+  font-size:1rem;background:var(--surface-alt);
+  padding:5px 15px;border-radius:5px;margin:14px 0;letter-spacing:.05em;
+}
+.success__acts{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+
+/* ── Rights ───────────────────────────────────────────────── */
+.rights-wrap{padding:68px 0;background:var(--ground);border-bottom:1px solid var(--border)}
+.accordion{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.acc-item{border-bottom:1px solid var(--border)}
+.acc-item:last-child{border-bottom:none}
+.acc-trigger{
+  width:100%;background:none;border:none;padding:17px 20px;
+  text-align:left;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.92rem;font-weight:500;color:var(--text-hi);gap:16px;
+  transition:background .15s;
+}
+.acc-trigger:hover,.acc-trigger[aria-expanded="true"]{background:var(--surface-alt)}
+.acc-ico{
+  flex-shrink:0;width:19px;height:19px;
+  border:1px solid var(--border-mid);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:var(--text-lo);
+  transition:transform .22s,border-color .15s,color .15s;
+}
+.acc-trigger[aria-expanded="true"] .acc-ico{
+  transform:rotate(180deg);border-color:var(--primary);color:var(--primary);
+}
+.acc-body{overflow:hidden;max-height:0;transition:max-height .3s ease,padding .3s ease;padding:0 20px}
+.acc-body.open{max-height:600px;padding:2px 20px 20px}
+.acc-body p{font-size:.875rem;color:var(--text-med);line-height:1.75}
+.acc-body p+p{margin-top:9px}
+.cite{
+  font-size:.7rem;font-weight:700;background:var(--accent-pale);color:#8B6820;
+  padding:1px 6px;border-radius:3px;margin-left:3px;
+}
+
+/* ── Archive ──────────────────────────────────────────────── */
+.archive-wrap{padding:68px 0}
+.archive-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:22px}
+.filter-row{display:flex;gap:7px;flex-wrap:wrap}
+.chip{
+  padding:5px 13px;border-radius:20px;font-size:.76rem;font-weight:500;
+  cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text-med);
+  transition:background .15s,border-color .15s,color .15s;
+}
+.chip:hover{border-color:var(--border-mid);background:var(--surface-alt)}
+.chip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.archive-count{font-size:.82rem;color:var(--text-lo);margin-top:4px}
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:14px}
+.case-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;
+  transition:box-shadow .15s;
+}
+.case-card:hover{box-shadow:0 4px 18px var(--shadow)}
+.case-card__head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:9px}
+.case-card__id{font-family:"Courier New",Courier,monospace;font-size:.68rem;color:var(--text-lo);letter-spacing:.04em}
+.vtag{font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:4px;flex-shrink:0}
+.v-shutdown{background:var(--caution-pale);color:var(--caution)}
+.v-removal{background:var(--accent-pale);color:#8B6820}
+.v-suspension{background:var(--surface-alt);color:var(--text-lo)}
+.v-surveillance{background:rgba(90,50,140,.07);color:#6A3A9A}
+.v-harassment{background:rgba(150,40,70,.07);color:#8A3050}
+.case-card__summary{font-size:.855rem;color:var(--text-med);line-height:1.55;margin-bottom:12px}
+.case-card__meta{display:flex;gap:12px;flex-wrap:wrap}
+.meta-item{font-size:.73rem;color:var(--text-lo);display:flex;align-items:center;gap:3px}
+
+/* ── Footer ───────────────────────────────────────────────── */
+footer{background:var(--primary);color:rgba(255,255,255,.75);padding:52px 0 30px;font-size:.875rem}
+footer h3{
+  font-family:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  font-weight:400;font-size:1.15rem;color:rgba(255,255,255,.95);margin-bottom:10px;
+}
+footer p{max-width:100%;color:rgba(255,255,255,.6);line-height:1.65}
+footer a{color:rgba(255,255,255,.75)}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px}
+@media(max-width:640px){.foot-grid{grid-template-columns:1fr;gap:28px}}
+.foot-ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.foot-ul a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.855rem}
+.foot-ul a:hover{color:rgba(255,255,255,.9)}
+.foot-divider{border:none;border-top:1px solid rgba(255,255,255,.12);margin-bottom:18px}
+.foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:.76rem;color:rgba(255,255,255,.38)}
+.foot-safety{
+  background:rgba(255,255,255,.07);border-left:3px solid var(--accent);
+  padding:13px 16px;border-radius:0 6px 6px 0;
+  margin-top:20px;font-size:.81rem;line-height:1.55;color:rgba(255,255,255,.65);
+}
+.foot-safety strong{color:rgba(255,255,255,.9)}
+
+/* ── Motion ───────────────────────────────────────────────── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav class="nav">
+  <div class="nav__in">
+    <a href="#" class="nav__brand" aria-label="Sākṣhī — home">
+      <span class="nav__brand-deva">साक्षी</span>
+      <span class="nav__brand-roman">Sākṣhī</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="#" class="nav-link active" data-panel="submit">Share a witness account</a></li>
+      <li><a href="#" class="nav-link" data-panel="rights">Your rights</a></li>
+      <li><a href="#" class="nav-link" data-panel="archive">Archive</a></li>
+    </ul>
+    <button class="nav__theme" id="themeBtn" aria-label="Toggle colour scheme">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ════════════════ SUBMIT PANEL ════════════════ -->
+<div id="panel-submit" class="panel active">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap wrap--narrow">
+      <p class="hero__eyebrow">India · Digital Rights Documentation</p>
+      <h1>Every account<br>is <em>a record</em>.</h1>
+      <p class="hero__desc">
+        Sākṣhī — the Sanskrit word for witness — is a safe space to document digital rights violations
+        arising during protest and civic action in India. Internet shutdowns, content removals,
+        account suspensions, surveillance, harassment. Your witness builds the historical record.
+      </p>
+      <div class="hero__cta">
+        <button class="btn btn--primary" onclick="scrollToForm()">Share what you witnessed</button>
+        <button class="btn btn--ghost" onclick="showPanel('rights')">Know your rights</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <section style="padding:60px 0 80px">
+    <div class="wrap wrap--narrow">
+
+      <div class="safe-note" role="note">
+        <span class="safe-note__ico" aria-hidden="true">🔒</span>
+        <div>
+          <strong>Your safety first.</strong> You may submit completely anonymously — no IP address
+          is logged, no account required. If you are concerned about surveillance, consider using a
+          <a href="#">VPN</a> or the <a href="#">Tor Browser</a> before accessing this page.
+        </div>
+      </div>
+
+      <div class="form-card" id="formCard">
+
+        <!-- Progress -->
+        <div class="prog" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" aria-label="Form progress">
+          <div class="prog__dot active" id="pd1"></div>
+          <div class="prog__dot" id="pd2"></div>
+          <div class="prog__dot" id="pd3"></div>
+          <div class="prog__dot" id="pd4"></div>
+          <div class="prog__dot" id="pd5"></div>
+          <span class="prog__lbl" id="progLbl">Step 1 of 5</span>
+        </div>
+
+        <!-- Step 1: What happened -->
+        <div class="step vis" id="step1">
+          <h2 class="step__title">What happened?</h2>
+          <p class="step__sub">Select everything that applies. More than one type is fine.</p>
+
+          <div class="field">
+            <span class="field__lbl">Type of violation</span>
+            <div class="type-grid" role="group" aria-label="Violation type">
+              <button type="button" class="type-card" data-t="shutdown" onclick="toggleType(this)">
+                <span class="type-card__ico" aria-hidden="true">📶</span>
+                <span class="type-card__txt">Internet shutdown or throttling</span>
+              </button>
+              <button type="button" class="type-card" data-t="removal" onclick="toggleType(this)">
+                <span class="type-card__ico" aria-hidden="true">🗑</span>
+                <span class="type-card__txt">Content removal or censorship</span>
+              </button>
+              <button type="button" class="type-card" data-t="suspension" onclick="toggleType(this)">
+                <span class="type-card__ico" aria-hidden="true">🔐</span>
+                <span class="type-card__txt">Account suspension or ban</span>
+              </button>
+              <button type="button" class="type-card" data-t="surveillance" onclick="toggleType(this)">
+                <span class="type-card__ico" aria-hidden="true">👁</span>
+                <span class="type-card__txt">Surveillance or monitoring</span>
+              </button>
+              <button type="button" class="type-card" data-t="harassment" onclick="toggleType(this)">
+                <span class="type-card__ico" aria-hidden="true">⚠️</span>
+                <span class="type-card__txt">Online harassment or doxxing</span>
+              </button>
+              <button type="button" class="type-card" data-t="arrest" onclick="toggleType(this)">
+                <span class="type-card__ico" aria-hidden="true">⚖️</span>
+                <span class="type-card__txt">Arrest or FIR for digital expression</span>
+              </button>
+              <button type="button" class="type-card" data-t="platform" onclick="toggleType(this)">
+                <span class="type-card__ico" aria-hidden="true">🏢</span>
+                <span class="type-card__txt">Platform compliance with state orders</span>
+              </button>
+              <button type="button" class="type-card" data-t="other" onclick="toggleType(this)">
+                <span class="type-card__ico" aria-hidden="true">•••</span>
+                <span class="type-card__txt">Something else</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field__lbl">Scale of impact</span>
+            <div class="opt-rows" role="group">
+              <label class="opt-row" id="scope-coll-lbl">
+                <input type="radio" name="scope" value="collective" onchange="onScopeChange(this)">
+                <div class="opt-row__body">
+                  <div class="opt-row__title">Collective violation</div>
+                  <div class="opt-row__desc">Affects a community, region, or group — e.g. an internet shutdown across a district.</div>
+                </div>
+                <span class="badge badge--safe">Easier to publish publicly</span>
+              </label>
+              <label class="opt-row" id="scope-ind-lbl">
+                <input type="radio" name="scope" value="individual" onchange="onScopeChange(this)">
+                <div class="opt-row__body">
+                  <div class="opt-row__title">Individual account</div>
+                  <div class="opt-row__desc">Happened to a specific person — e.g. your account was suspended or you were arrested.</div>
+                </div>
+                <span class="badge badge--priv">Handled with care</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn--primary" style="margin-left:auto" onclick="nextStep()">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 2: When & where -->
+        <div class="step" id="step2">
+          <h2 class="step__title">When and where?</h2>
+          <p class="step__sub">Approximate details are fine. Even a rough date and region help build the record.</p>
+
+          <div class="row-2">
+            <div class="field">
+              <label class="field__lbl" for="fDate">Date of incident</label>
+              <input type="date" id="fDate">
+            </div>
+            <div class="field">
+              <label class="field__lbl" for="fTime">Approximate time <span class="opt">(optional)</span></label>
+              <input type="time" id="fTime">
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label class="field__lbl" for="fState">State / UT</label>
+              <select id="fState">
+                <option value="">Select…</option>
+                <option>Delhi</option><option>Uttar Pradesh</option><option>Haryana</option>
+                <option>Punjab</option><option>Rajasthan</option><option>Maharashtra</option>
+                <option>West Bengal</option><option>Karnataka</option><option>Tamil Nadu</option>
+                <option>Telangana</option><option>Kerala</option><option>Gujarat</option>
+                <option>Madhya Pradesh</option><option>Bihar</option><option>Jharkhand</option>
+                <option>Assam</option><option>Manipur</option><option>Tripura</option>
+                <option>Meghalaya</option><option>Nagaland</option><option>Mizoram</option>
+                <option>Arunachal Pradesh</option><option>Sikkim</option><option>Uttarakhand</option>
+                <option>Himachal Pradesh</option><option>Jammu & Kashmir</option><option>Ladakh</option>
+                <option>Goa</option><option>Odisha</option><option>Chhattisgarh</option>
+                <option>Andhra Pradesh</option><option>Other / National</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__lbl" for="fCity">City / District <span class="opt">(optional)</span></label>
+              <input type="text" id="fCity" placeholder="e.g. Shaheen Bagh">
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__lbl" for="fPlatform">Platforms or services affected <span class="opt">(optional)</span></label>
+            <input type="text" id="fPlatform" placeholder="e.g. Twitter, WhatsApp, mobile internet">
+            <p class="field__hint">Separate multiple platforms with commas</p>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn--ghost" onclick="prevStep()">← Back</button>
+            <button type="button" class="btn btn--primary" style="margin-left:auto" onclick="nextStep()">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Account -->
+        <div class="step" id="step3">
+          <h2 class="step__title">Tell us what happened.</h2>
+          <p class="step__sub">In your own words. Write as much or as little as feels right. You are safe here.</p>
+
+          <div class="field">
+            <label class="field__lbl" for="fDesc">Your account</label>
+            <textarea id="fDesc" maxlength="3000" placeholder="Describe what you witnessed or experienced — which platform was involved, what was removed or disrupted, any official notice you received, and how it affected you or your community." oninput="charCount(this,'fDescCt',3000)"></textarea>
+            <div class="char-count" id="fDescCt">0 / 3000</div>
+          </div>
+          <div class="field">
+            <label class="field__lbl" for="fEvid">Links to evidence <span class="opt">(optional)</span></label>
+            <textarea id="fEvid" style="min-height:80px" placeholder="Screenshots, news reports, archived content, official orders — one link per line. Only share links you are comfortable with."></textarea>
+            <p class="field__hint">If any link could identify you and you prefer anonymity, leave this blank.</p>
+          </div>
+          <div class="field">
+            <label class="field__lbl" for="fAuth">Did you receive an official notice? <span class="opt">(optional)</span></label>
+            <input type="text" id="fAuth" placeholder="e.g. MeitY order, Police notice, Platform's Trust & Safety email…">
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn--ghost" onclick="prevStep()">← Back</button>
+            <button type="button" class="btn btn--primary" style="margin-left:auto" onclick="nextStep()">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Anonymity -->
+        <div class="step" id="step4">
+          <h2 class="step__title">How would you like to share this?</h2>
+          <p class="step__sub">Choose the level of identification you are comfortable with.</p>
+
+          <div class="opt-rows" role="group" aria-label="Anonymity options">
+            <label class="opt-row sel" id="anon-a-lbl">
+              <input type="radio" name="anon" value="anonymous" checked onchange="onAnonChange(this)">
+              <div class="opt-row__body">
+                <div class="opt-row__title">Fully anonymous</div>
+                <div class="opt-row__desc">No identifying information collected or stored. Your account will read "Anonymous witness." We cannot follow up with you.</div>
+              </div>
+              <span class="badge badge--safe">Recommended</span>
+            </label>
+            <label class="opt-row" id="anon-p-lbl">
+              <input type="radio" name="anon" value="partial" onchange="onAnonChange(this)">
+              <div class="opt-row__body">
+                <div class="opt-row__title">Private contact for follow-up only</div>
+                <div class="opt-row__desc">Share an email for verification purposes. It will never be published and will be deleted after we make contact.</div>
+              </div>
+              <span class="badge badge--priv">Private</span>
+            </label>
+            <label class="opt-row" id="anon-n-lbl">
+              <input type="radio" name="anon" value="named" onchange="onAnonChange(this)">
+              <div class="opt-row__body">
+                <div class="opt-row__title">Named attribution</div>
+                <div class="opt-row__desc">Your name and organisation (if any) will be published alongside your account. Choose this if you want to go on the record.</div>
+              </div>
+            </label>
+          </div>
+
+          <div id="fld-partial" style="display:none;margin-top:16px">
+            <div class="field">
+              <label class="field__lbl" for="fEmail">Your email address</label>
+              <input type="email" id="fEmail" placeholder="your@email.com">
+              <p class="field__hint">Used only for verification. Deleted after contact is made. Never published.</p>
+            </div>
+          </div>
+
+          <div id="fld-named" style="display:none;margin-top:16px">
+            <div class="row-2">
+              <div class="field">
+                <label class="field__lbl" for="fName">Your name</label>
+                <input type="text" id="fName" placeholder="Full name">
+              </div>
+              <div class="field">
+                <label class="field__lbl" for="fOrg">Organisation <span class="opt">(optional)</span></label>
+                <input type="text" id="fOrg" placeholder="If applicable">
+              </div>
+            </div>
+            <div class="field">
+              <label class="field__lbl" for="fNameEmail">Contact email <span class="opt">(optional)</span></label>
+              <input type="email" id="fNameEmail" placeholder="your@email.com">
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn--ghost" onclick="prevStep()">← Back</button>
+            <button type="button" class="btn btn--primary" style="margin-left:auto" onclick="goToReview()">Review your account →</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Review -->
+        <div class="step" id="step5">
+          <h2 class="step__title">Review before submitting.</h2>
+          <p class="step__sub">Read through once more. Every submission is reviewed by a human before it is archived.</p>
+
+          <ul class="review-list" id="reviewList"></ul>
+
+          <div class="safe-note" style="margin-top:22px">
+            <span class="safe-note__ico" aria-hidden="true">✔</span>
+            <div style="font-size:.83rem">
+              By submitting you confirm this account is truthful to the best of your knowledge.
+              <strong>You can request removal at any time</strong> by referencing your case ID.
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn--ghost" onclick="prevStep()">← Edit</button>
+            <button type="button" class="btn btn--primary" style="margin-left:auto" onclick="submitForm()">Submit to archive →</button>
+          </div>
+        </div>
+
+        <!-- Success -->
+        <div class="step" id="stepOK">
+          <div class="success">
+            <span class="success__ico" aria-hidden="true">🌿</span>
+            <h2 class="step__title" style="font-size:1.5rem">Your account has been received.</h2>
+            <p style="margin:10px auto 0;max-width:44ch;font-size:.93rem;text-align:center">
+              Thank you. Every documented account strengthens the collective record.
+              A member of our team will review your submission.
+            </p>
+            <div class="success__ref" id="caseRef">—</div>
+            <p style="font-size:.78rem;color:var(--text-lo);text-align:center">
+              Save this reference. Use it to track your submission or request removal.
+            </p>
+            <div class="success__acts">
+              <button type="button" class="btn btn--ghost" onclick="resetForm()">Submit another account</button>
+              <button type="button" class="btn btn--primary" onclick="showPanel('archive')">View the archive</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /form-card -->
+    </div>
+  </section>
+
+</div><!-- /panel-submit -->
+
+<!-- ════════════════ RIGHTS PANEL ════════════════ -->
+<div id="panel-rights" class="panel">
+  <div class="rights-wrap">
+    <div class="wrap wrap--narrow">
+      <p class="hero__eyebrow" style="margin-bottom:12px">India · Digital Rights</p>
+      <h2 style="margin-bottom:8px">Know your rights.</h2>
+      <p style="margin-bottom:34px;font-size:.97rem">
+        Your digital rights are constitutional rights. Here is what you are entitled to —
+        and what to do when those rights are violated.
+      </p>
+
+      <div class="accordion">
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" onclick="toggleAcc(this)">
+            <span>Right to privacy online</span>
+            <span class="acc-ico" aria-hidden="true">↓</span>
+          </button>
+          <div class="acc-body">
+            <p>In 2017, a nine-judge bench of the Supreme Court unanimously held in <em>K.S. Puttaswamy v. Union of India</em> that privacy is a fundamental right protected under Article 21 of the Constitution — the right to life and personal liberty. <span class="cite">Art. 21</span></p>
+            <p>This extends to your digital communications, data, and online activity. Surveillance without lawful authority, mass data collection, and targeted monitoring of citizens without due process can all be challenged as violations of this right.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" onclick="toggleAcc(this)">
+            <span>Freedom of expression online</span>
+            <span class="acc-ico" aria-hidden="true">↓</span>
+          </button>
+          <div class="acc-body">
+            <p>Article 19(1)(a) of the Constitution guarantees every citizen the right to freedom of speech and expression. The Supreme Court has confirmed this right extends to digital and online expression — your posts, messages, and journalism online are protected. <span class="cite">Art. 19(1)(a)</span></p>
+            <p>Section 66A of the IT Act, used to arrest people for online posts, was struck down in <em>Shreya Singhal v. Union of India</em> (2015) as unconstitutional. Restrictions on expression must be proportionate and within the narrow grounds listed in Article 19(2).</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" onclick="toggleAcc(this)">
+            <span>Internet shutdowns and your rights</span>
+            <span class="acc-ico" aria-hidden="true">↓</span>
+          </button>
+          <div class="acc-body">
+            <p>In <em>Anuradha Bhasin v. Union of India</em> (2020), the Supreme Court held that the freedom to carry on any trade or profession over the internet is protected, and any shutdown must be (a) necessary, (b) proportionate, and (c) subject to judicial review. <span class="cite">Art. 19(1)(g)</span></p>
+            <p>Any shutdown order must be published and can be challenged before a High Court or the Supreme Court. If you witness a shutdown, document the exact time, location, and scope — this is exactly what Sākṣhī is designed for.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" onclick="toggleAcc(this)">
+            <span>Your rights under the DPDP Act 2023</span>
+            <span class="acc-ico" aria-hidden="true">↓</span>
+          </button>
+          <div class="acc-body">
+            <p>The Digital Personal Data Protection Act, 2023 gives you rights over personal data held by organisations operating in India: the right to information about your data; the right to correction and erasure; the right to nominate a representative; and the right to grieve through a Data Protection Board. <span class="cite">DPDPA 2023</span></p>
+            <p>If a platform removes your content or suspends your account and you believe this involved processing of your personal data, you may raise a grievance under this Act in addition to platform-level mechanisms.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" onclick="toggleAcc(this)">
+            <span>If your content is removed by a platform</span>
+            <span class="acc-ico" aria-hidden="true">↓</span>
+          </button>
+          <div class="acc-body">
+            <p>Under the IT (Intermediary Guidelines) Rules 2021, significant social media intermediaries must publish a Grievance Officer in India, acknowledge your complaint within 24 hours, and resolve it within 15 days. <span class="cite">IT Rules 2021</span></p>
+            <p>Steps: (1) Screenshot the removal notice immediately. (2) File a formal grievance via the platform's own mechanism. (3) If unresolved, contact the platform's India Grievance Officer (they must publish this). (4) You can approach the Appellate Committee under the Rules. Document everything — that is where Sākṣhī comes in.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" onclick="toggleAcc(this)">
+            <span>If you are arrested for an online post</span>
+            <span class="acc-ico" aria-hidden="true">↓</span>
+          </button>
+          <div class="acc-body">
+            <p>You have the right to be informed of the grounds for arrest immediately, the right to consult and be defended by a legal practitioner of your choice, and the right to be produced before a magistrate within 24 hours. <span class="cite">Art. 22</span></p>
+            <p>Do not hand over your devices without legal advice. Contact a lawyer immediately. Organisations that can help: Internet Freedom Foundation (IFF), SFLC.in, Lawyers Collective, and Human Rights Law Network. Inform a trusted contact of your situation as quickly as possible.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" onclick="toggleAcc(this)">
+            <span>How to protect yourself digitally</span>
+            <span class="acc-ico" aria-hidden="true">↓</span>
+          </button>
+          <div class="acc-body">
+            <p><strong>Use a reputable VPN</strong> — it encrypts your internet traffic and masks your location. It can also help you access services during throttling. <strong>Use Signal</strong> for sensitive conversations — end-to-end encrypted and minimal metadata. <strong>Enable two-factor authentication</strong> on all accounts.</p>
+            <p><strong>Archive before posting.</strong> Use archive.org or archive.ph to save copies of important content before it can be removed. <strong>At a protest:</strong> consider disabling biometric unlock — fingerprint and face can be compelled in ways a PIN or passphrase cannot. Clear your browser history after using this site if surveillance is a concern.</p>
+          </div>
+        </div>
+
+      </div><!-- /accordion -->
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ARCHIVE PANEL ═══════════════ -->
+<div id="panel-archive" class="panel">
+  <div class="archive-wrap">
+    <div class="wrap">
+      <div class="archive-head">
+        <div>
+          <p class="hero__eyebrow" style="margin-bottom:8px;font-size:.68rem">Collective record</p>
+          <h2>Documented violations</h2>
+          <p class="archive-count" id="archCount">Loading…</p>
+        </div>
+        <div class="filter-row" role="group" aria-label="Filter by type">
+          <button class="chip active" onclick="filterArch(this,'all')">All</button>
+          <button class="chip" onclick="filterArch(this,'shutdown')">Internet shutdowns</button>
+          <button class="chip" onclick="filterArch(this,'removal')">Content removal</button>
+          <button class="chip" onclick="filterArch(this,'suspension')">Suspensions</button>
+          <button class="chip" onclick="filterArch(this,'surveillance')">Surveillance</button>
+        </div>
+      </div>
+
+      <div class="case-grid" id="caseGrid"></div>
+
+      <div class="safe-note" style="margin-top:28px;max-width:640px">
+        <span class="safe-note__ico" aria-hidden="true">🔒</span>
+        <div style="font-size:.83rem">
+          Individual accounts are stored securely and are <strong>not published here</strong> without the submitter's explicit consent.
+          Only collective violations — those affecting communities or groups — appear in this public archive.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h3>साक्षी Sākṣhī</h3>
+        <p>
+          A digital rights monitoring and archive platform documenting violations arising during
+          protest and civic action in India. Built to support accountability — not as a dispute
+          resolution mechanism or legal advice service.
+        </p>
+        <div class="foot-safety">
+          <strong>Browsing safely?</strong> Use a VPN or Tor Browser if you have concerns about
+          surveillance. Your visit is not logged by this platform. Clear your browser history after
+          use if needed. You can request removal of your submission at any time.
+        </div>
+      </div>
+      <div>
+        <h3>Resources</h3>
+        <ul class="foot-ul">
+          <li><a href="#">Internet Freedom Foundation</a></li>
+          <li><a href="#">Software Freedom Law Centre</a></li>
+          <li><a href="#">Access Now</a></li>
+          <li><a href="#">Shutdown Tracker (SFLC.in)</a></li>
+          <li><a href="#">Digital Rights Foundation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Platform</h3>
+        <ul class="foot-ul">
+          <li><a href="#">What Sākṣhī is</a></li>
+          <li><a href="#">Privacy policy</a></li>
+          <li><a href="#">Data handling</a></li>
+          <li><a href="#">Request removal</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="foot-divider">
+    <div class="foot-bottom">
+      <span>Sākṣhī — Digital Rights Archive · India</span>
+      <span>Not a legal service. Not a dispute resolution mechanism.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── State ─────────────────────────────────────────────────── */
+var S = {
+  step: 1,
+  types: new Set(),
+  scope: '',
+  anon: 'anonymous',
+};
+
+/* ── Panel navigation ──────────────────────────────────────── */
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(function(a){
+    a.classList.toggle('active', a.dataset.panel === id);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.nav-link').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    showPanel(a.dataset.panel);
+  });
+});
+
+function scrollToForm() {
+  document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── Theme ─────────────────────────────────────────────────── */
+var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+document.getElementById('themeBtn').addEventListener('click', function(){
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+});
+
+/* ── Form steps ────────────────────────────────────────────── */
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(function(el){ el.classList.remove('vis'); });
+  var target = document.getElementById(n === 'ok' ? 'stepOK' : 'step' + n);
+  if (target) target.classList.add('vis');
+  if (typeof n === 'number') {
+    S.step = n;
+    updateProg();
+  }
+  var card = document.getElementById('formCard');
+  if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateProg() {
+  for (var i = 1; i <= 5; i++) {
+    var d = document.getElementById('pd' + i);
+    d.classList.remove('active','done');
+    if (i < S.step) d.classList.add('done');
+    else if (i === S.step) d.classList.add('active');
+  }
+  document.getElementById('progLbl').textContent = 'Step ' + S.step + ' of 5';
+  document.querySelector('.prog').setAttribute('aria-valuenow', S.step);
+}
+
+function nextStep() {
+  showStep(S.step + 1);
+}
+
+function prevStep() {
+  if (S.step > 1) showStep(S.step - 1);
+}
+
+function goToReview() {
+  buildReview();
+  showStep(5);
+}
+
+/* ── Type cards ────────────────────────────────────────────── */
+function toggleType(btn) {
+  var t = btn.dataset.t;
+  if (S.types.has(t)) { S.types.delete(t); btn.classList.remove('sel'); }
+  else { S.types.add(t); btn.classList.add('sel'); }
+}
+
+var typeLabels = {
+  shutdown: 'Internet shutdown / throttling',
+  removal: 'Content removal',
+  suspension: 'Account suspension / ban',
+  surveillance: 'Surveillance / monitoring',
+  harassment: 'Online harassment / doxxing',
+  arrest: 'Arrest or FIR for digital expression',
+  platform: 'Platform compliance with state orders',
+  other: 'Other',
+};
+
+/* ── Scope ─────────────────────────────────────────────────── */
+function onScopeChange(inp) {
+  ['coll','ind'].forEach(function(k){
+    document.getElementById('scope-' + k + '-lbl').classList.remove('sel');
+  });
+  inp.closest('.opt-row').classList.add('sel');
+  S.scope = inp.value;
+}
+
+/* ── Anonymity ─────────────────────────────────────────────── */
+function onAnonChange(inp) {
+  ['a','p','n'].forEach(function(k){
+    document.getElementById('anon-' + k + '-lbl').classList.remove('sel');
+  });
+  inp.closest('.opt-row').classList.add('sel');
+  S.anon = inp.value;
+  document.getElementById('fld-partial').style.display = inp.value === 'partial' ? 'block' : 'none';
+  document.getElementById('fld-named').style.display   = inp.value === 'named'   ? 'block' : 'none';
+}
+
+/* ── Char count ────────────────────────────────────────────── */
+function charCount(el, cid, max) {
+  var n = el.value.length;
+  var ct = document.getElementById(cid);
+  ct.textContent = n + ' / ' + max;
+  ct.classList.toggle('near', n > max * 0.85);
+}
+
+/* ── Review ────────────────────────────────────────────────── */
+var anonLabels = { anonymous: 'Fully anonymous', partial: 'Private contact (email for verification only)', named: 'Named attribution' };
+
+function buildReview() {
+  var date = document.getElementById('fDate').value;
+  var st   = document.getElementById('fState').value;
+  var city = document.getElementById('fCity').value;
+  var desc = document.getElementById('fDesc').value;
+  var loc  = [st, city].filter(Boolean).join(', ');
+  var types = S.types.size ? Array.from(S.types).map(function(t){ return typeLabels[t] || t; }).join(', ') : '—';
+
+  var rows = [
+    ['Violation type', types],
+    ['Scale', S.scope === 'collective' ? 'Collective violation' : S.scope === 'individual' ? 'Individual account' : '—'],
+    ['Date', date || '—'],
+    ['Location', loc || '—'],
+    ['Account', desc ? (desc.length > 180 ? desc.slice(0,180) + '…' : desc) : '—'],
+    ['How shared', anonLabels[S.anon] || '—'],
+  ];
+
+  document.getElementById('reviewList').innerHTML = rows.map(function(r){
+    return '<li class="review-item"><span class="review-item__k">' + r[0] + '</span><span class="review-item__v">' + r[1] + '</span></li>';
+  }).join('');
+}
+
+/* ── Submit ────────────────────────────────────────────────── */
+function genRef() {
+  var yr = new Date().getFullYear();
+  var rnd = Math.random().toString(36).substring(2,8).toUpperCase();
+  return 'DRV-' + yr + '-' + rnd;
+}
+
+function submitForm() {
+  document.getElementById('caseRef').textContent = genRef();
+  document.querySelector('.prog').style.visibility = 'hidden';
+  showStep('ok');
+}
+
+function resetForm() {
+  S.step = 1; S.types.clear(); S.scope = ''; S.anon = 'anonymous';
+  document.querySelectorAll('.type-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('.opt-row').forEach(function(o){ o.classList.remove('sel'); });
+  document.getElementById('anon-a-lbl').classList.add('sel');
+  document.querySelector('#anon-a-lbl input').checked = true;
+  document.getElementById('fld-partial').style.display = 'none';
+  document.getElementById('fld-named').style.display = 'none';
+  document.getElementById('fDesc').value = '';
+  document.getElementById('fDescCt').textContent = '0 / 3000';
+  document.querySelector('.prog').style.visibility = 'visible';
+  showStep(1);
+}
+
+/* ── Accordion ─────────────────────────────────────────────── */
+function toggleAcc(btn) {
+  var open = btn.getAttribute('aria-expanded') === 'true';
+  document.querySelectorAll('.acc-trigger').forEach(function(b){
+    b.setAttribute('aria-expanded','false');
+    b.nextElementSibling.classList.remove('open');
+  });
+  if (!open) {
+    btn.setAttribute('aria-expanded','true');
+    btn.nextElementSibling.classList.add('open');
+  }
+}
+
+/* ── Archive ───────────────────────────────────────────────── */
+var cases = [
+  { id:'DRV-2025-A001', type:'shutdown', label:'Internet shutdown', date:'2025-06-14', loc:'Delhi NCR',
+    text:'Mobile internet suspended across parts of Delhi for approximately 18 hours during protests near Parliament. All major carriers affected. No advance notice published.' },
+  { id:'DRV-2025-A002', type:'removal', label:'Content removal', date:'2025-06-15', loc:'National (X/Twitter)',
+    text:'Over 40 accounts and 200+ posts documenting the June 14 protests removed or restricted within 24 hours. Posts included photographs, live updates, and legal guidance for detained protesters.' },
+  { id:'DRV-2025-A003', type:'shutdown', label:'Internet throttling', date:'2025-06-16', loc:'Haryana (Nuh, Faridabad)',
+    text:'Broadband and mobile internet severely throttled. Multiple witnesses reported speeds below 100 kbps — effectively preventing video uploads and livestreaming from protest sites.' },
+  { id:'DRV-2025-A004', type:'surveillance', label:'Surveillance', date:'2025-06-14', loc:'Delhi',
+    text:'Facial recognition cameras deployed at multiple protest sites. Several individuals received summons within 48 hours, with photographs cited as evidence of their presence at the protests.' },
+  { id:'DRV-2025-A005', type:'removal', label:'Content removal', date:'2025-06-18', loc:'National (YouTube)',
+    text:'Six livestreams of protest events removed mid-broadcast. Channels were not given advance notice or the opportunity to appeal before removal was enforced.' },
+  { id:'DRV-2025-A006', type:'suspension', label:'Account suspension', date:'2025-06-19', loc:'National (Instagram)',
+    text:'Coordinated suspension of protest documentation accounts. At least 15 accounts with a combined following of over 800,000 suspended within a six-hour window. Most appeals were rejected automatically.' },
+  { id:'DRV-2025-A007', type:'shutdown', label:'Internet shutdown', date:'2025-07-02', loc:'Manipur (multiple districts)',
+    text:'Mobile internet suspended across five districts in Manipur for 72 hours. No published shutdown order was made available, making legal challenge difficult.' },
+  { id:'DRV-2025-A008', type:'surveillance', label:'Platform compliance', date:'2025-06-20', loc:'National',
+    text:'Platform confirmed sharing group metadata with law enforcement without notifying group members. Estimated 200+ protest coordination groups affected. Members had no prior indication this had occurred.' },
+];
+
+function renderCases(filter) {
+  var data = filter === 'all' ? cases : cases.filter(function(c){ return c.type === filter; });
+  document.getElementById('archCount').textContent = 'Showing ' + data.length + ' collective account' + (data.length !== 1 ? 's' : '');
+  document.getElementById('caseGrid').innerHTML = data.map(function(c){
+    return '<article class="case-card">' +
+      '<div class="case-card__head">' +
+        '<span class="case-card__id">' + c.id + '</span>' +
+        '<span class="vtag v-' + c.type + '">' + c.label + '</span>' +
+      '</div>' +
+      '<p class="case-card__summary">' + c.text + '</p>' +
+      '<div class="case-card__meta">' +
+        '<span class="meta-item">' +
+          '<svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M6 3.5v2.5l1.5 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>' +
+          c.date +
+        '</span>' +
+        '<span class="meta-item">' +
+          '<svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1C4.07 1 2.5 2.57 2.5 4.5c0 3.13 3.5 6.5 3.5 6.5s3.5-3.37 3.5-6.5C9.5 2.57 7.93 1 6 1z" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="4.5" r=".9" fill="currentColor"/></svg>' +
+          c.loc +
+        '</span>' +
+      '</div>' +
+    '</article>';
+  }).join('');
+}
+
+function filterArch(btn, f) {
+  document.querySelectorAll('.filter-row .chip').forEach(function(c){ c.classList.remove('active'); });
+  btn.classList.add('active');
+  renderCases(f);
+}
+
+/* ── Init ──────────────────────────────────────────────────── */
+renderCases('all');
+</script>
